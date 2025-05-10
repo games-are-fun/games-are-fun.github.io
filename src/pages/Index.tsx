@@ -1,11 +1,21 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from "react";
+import ParticleBackground from "../components/ParticleBackground";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-black text-white">
+      {/* Animated background */}
+      <ParticleBackground />
+      
+      {/* Content */}
+      <div className="z-20 text-center px-4">
+        <h1 className="text-5xl md:text-7xl font-bold tracking-wider animate-float text-gradient">
+          COMING SOON
+        </h1>
+        <div className="mt-8 animate-pulse-slow">
+          <div className="h-1 w-20 bg-white mx-auto rounded-full" />
+        </div>
       </div>
     </div>
   );
