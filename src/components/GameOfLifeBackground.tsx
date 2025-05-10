@@ -154,7 +154,7 @@ const GameOfLifeBackground = () => {
   }, [dimensions]);
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden">
+    <div className="fixed inset-0 z-0 overflow-hidden opacity-50">
       <canvas ref={canvasRef} className="absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-blue-900/5 to-purple-900/10 z-10" />
     </div>
