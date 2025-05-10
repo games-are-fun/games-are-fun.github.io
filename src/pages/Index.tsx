@@ -9,8 +9,8 @@ const Index = () => {
       <GameOfLifeBackground />
       
       {/* Content */}
-      <div className="z-20 text-center px-4">
-        <h1 className="text-3xl md:text-5xl font-mono tracking-wider animate-float text-gradient lowercase">
+      <div className="z-20 text-center px-4 pb-8">
+        <h1 className="text-3xl md:text-5xl font-mono tracking-wider lowercase">
           coming soon
         </h1>
         <div className="mt-6 animate-pulse-slow">
