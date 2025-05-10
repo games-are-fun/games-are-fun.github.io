@@ -10,7 +10,7 @@ const Index = () => {
       
       {/* Content */}
       <div className="z-20 text-center px-4">
-        <h1 className="text-3xl md:text-5xl font-bold tracking-wider animate-float text-gradient lowercase">
+        <h1 className="text-3xl md:text-5xl font-mono tracking-wider animate-float text-gradient lowercase">
           coming soon
         </h1>
         <div className="mt-6 animate-pulse-slow">
