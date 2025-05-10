@@ -1,5 +1,3 @@
-
-import React from "react";
 import GameOfLifeBackground from "../components/GameOfLifeBackground";
 
 const Index = () => {
@@ -7,10 +5,10 @@ const Index = () => {
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-black text-white">
       {/* Animated background */}
       <GameOfLifeBackground />
-      
+
       {/* Content */}
       <div className="z-20 text-center px-4">
-        <h1 className="text-3xl md:text-5xl font-bold tracking-wider animate-float text-gradient lowercase">
+        <h1 className="text-3xl md:text-5xl font-mono font-extrabold tracking-wider lowercase">
           coming soon
         </h1>
         <div className="mt-6 animate-pulse-slow">
