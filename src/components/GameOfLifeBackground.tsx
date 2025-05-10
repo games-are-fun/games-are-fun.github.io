@@ -1,5 +1,4 @@
-
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const GameOfLifeBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -9,9 +8,13 @@ const GameOfLifeBackground = () => {
 
   // Initialize the grid
   const initializeGrid = (cols: number, rows: number) => {
-    const grid = Array(rows).fill(null).map(() => 
-      Array(cols).fill(null).map(() => Math.random() > 0.8)
-    );
+    const grid = Array(rows)
+      .fill(null)
+      .map(() =>
+        Array(cols)
+          .fill(null)
+          .map(() => Math.random() > 0.8)
+      );
     return grid;
   };
 
@@ -19,7 +22,9 @@ const GameOfLifeBackground = () => {
   const calculateNextGeneration = (grid: boolean[][]) => {
     const rows = grid.length;
     const cols = grid[0].length;
-    const newGrid = Array(rows).fill(null).map(() => Array(cols).fill(false));
+    const newGrid = Array(rows)
+      .fill(null)
+      .map(() => Array(cols).fill(false));
 
     // Function to count live neighbors
     const countNeighbors = (grid: boolean[][], x: number, y: number) => {
@@ -28,11 +33,11 @@ const GameOfLifeBackground = () => {
         for (let j = -1; j <= 1; j++) {
           // Skip the cell itself
           if (i === 0 && j === 0) continue;
-          
+
           // Handle edge wraparound
           const row = (y + i + rows) % rows;
           const col = (x + j + cols) % cols;
-          
+
           if (grid[row][col]) count++;
         }
       }
@@ -50,7 +55,7 @@ const GameOfLifeBackground = () => {
         // 2. Any live cell with two or three live neighbors lives on
         // 3. Any live cell with more than three live neighbors dies (overpopulation)
         // 4. Any dead cell with exactly three live neighbors becomes a live cell (reproduction)
-        
+
         if (cell) {
           newGrid[y][x] = neighbors === 2 || neighbors === 3;
         } else {
@@ -89,10 +94,10 @@ const GameOfLifeBackground = () => {
         height: window.innerHeight,
       });
     };
-    
+
     handleResize();
     window.addEventListener("resize", handleResize);
-    
+
     return () => {
       window.removeEventListener("resize", handleResize);
       if (animationFrameId.current) {
@@ -115,24 +120,32 @@ const GameOfLifeBackground = () => {
     // Calculate grid size
     const cols = Math.ceil(dimensions.width / cellSize);
     const rows = Math.ceil(dimensions.height / cellSize);
-    
+
     // Initialize grid
     let grid = initializeGrid(cols, rows);
-    
+
+    // Add frame counter to slow down the simulation
+    let frameCount = 0;
+    const updateEveryNFrames = 2; // Update grid every 3 frames for a tiny slowdown
+
     // Animation loop
     const animate = () => {
       // Draw current grid
       drawGrid(ctx, grid);
-      
-      // Calculate and update to next generation
-      grid = calculateNextGeneration(grid);
-      
+
+      // Calculate and update to next generation only every N frames
+      frameCount++;
+      if (frameCount >= updateEveryNFrames) {
+        grid = calculateNextGeneration(grid);
+        frameCount = 0;
+      }
+
       // Schedule next frame
       animationFrameId.current = requestAnimationFrame(animate);
     };
-    
+
     animate();
-    
+
     return () => {
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
@@ -142,10 +155,7 @@ const GameOfLifeBackground = () => {
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden">
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0"
-      />
+      <canvas ref={canvasRef} className="absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-blue-900/5 to-purple-900/10 z-10" />
     </div>
   );
