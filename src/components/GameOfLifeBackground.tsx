@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 
 const GameOfLifeBackground = () => {
@@ -5,8 +6,6 @@ const GameOfLifeBackground = () => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const animationFrameId = useRef<number>();
   const cellSize = 10; // Size of each cell in pixels
-  const frameDelay = 200; // Delay between frames in milliseconds (higher = slower)
-  const lastFrameTime = useRef<number>(0);
 
   // Initialize the grid
   const initializeGrid = (cols: number, rows: number) => {
@@ -63,9 +62,9 @@ const GameOfLifeBackground = () => {
     return newGrid;
   };
 
-  // Draw the grid on canvas with darker cells
+  // Draw the grid on canvas
   const drawGrid = (ctx: CanvasRenderingContext2D, grid: boolean[][]) => {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.95)"; // Darker background
+    ctx.fillStyle = "rgba(0, 0, 0, 0.9)";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
     const rows = grid.length;
@@ -75,7 +74,7 @@ const GameOfLifeBackground = () => {
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         if (grid[y][x]) {
-          ctx.fillStyle = "rgba(255, 255, 255, 0.2)"; // Darker cells
+          ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
           ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
         }
       }
@@ -120,24 +119,19 @@ const GameOfLifeBackground = () => {
     // Initialize grid
     let grid = initializeGrid(cols, rows);
     
-    // Animation loop with frame rate control
-    const animate = (timestamp: number) => {
-      // Only update if enough time has passed
-      if (timestamp - lastFrameTime.current >= frameDelay) {
-        // Draw current grid
-        drawGrid(ctx, grid);
-        
-        // Calculate and update to next generation
-        grid = calculateNextGeneration(grid);
-        
-        lastFrameTime.current = timestamp;
-      }
+    // Animation loop
+    const animate = () => {
+      // Draw current grid
+      drawGrid(ctx, grid);
+      
+      // Calculate and update to next generation
+      grid = calculateNextGeneration(grid);
       
       // Schedule next frame
       animationFrameId.current = requestAnimationFrame(animate);
     };
     
-    animationFrameId.current = requestAnimationFrame(animate);
+    animate();
     
     return () => {
       if (animationFrameId.current) {
@@ -152,7 +146,7 @@ const GameOfLifeBackground = () => {
         ref={canvasRef}
         className="absolute inset-0"
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-blue-900/10 to-purple-900/15 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-blue-900/5 to-purple-900/10 z-10" />
     </div>
   );
 };
